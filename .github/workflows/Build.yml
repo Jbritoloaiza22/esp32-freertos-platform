@@ -1,0 +1,57 @@
+name: ESP32 Platform CI build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t esp32-platform ./docker
+
+      - name: Build ESP-IDF project
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/project \
+            -w /project \
+            esp32-platform \
+            bash -c "
+              idf.py build
+            "
+
+      - name: Static Analysis (cppcheck)
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/project \
+            -w /project \
+            esp32-platform \
+            bash -c "
+              apt-get update &&
+              apt-get install -y cppcheck &&
+              cd /project &&
+              cppcheck --enable=warning,performance,portability \
+                --error-exitcode=1 \
+                --inline-suppr \
+                --suppress=missingIncludeSystem \
+                --suppress=toomanyconfigs \
+                -i build \
+                -i bootloader \
+                -i managed_components \
+                app bsp drivers services include main tasks
+            "
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32-firmware
+          path: |
+            build/*.bin
+            build/*.elf
+            build/*.map
