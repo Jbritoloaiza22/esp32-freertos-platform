@@ -26,6 +26,16 @@ jobs:
               idf.py build
             "
 
+      - name: Static Analysis (cppcheck)
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cppcheck
+
+          cppcheck --enable=all --error-exitcode=1 \
+            --inline-suppr \
+            --suppress=missingIncludeSystem \
+            app bsp drivers services include
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
