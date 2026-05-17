@@ -1,0 +1,27 @@
+name: ESP32 Platform CI build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t esp32-platform ./docker
+
+      - name: Build ESP-IDF project
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/project \
+            -w /project \
+            esp32-platform \
+            bash -c "
+              idf.py build
+            "
