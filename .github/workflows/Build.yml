@@ -41,9 +41,9 @@ jobs:
                 --inline-suppr \
                 --suppress=missingIncludeSystem \
                 --suppress=toomanyconfigs \
-                --exclude=build \
-                --exclude=bootloader \
-                --exclude=managed_components \
+                -i build \
+                -i bootloader \
+                -i managed_components \
                 app bsp drivers services include main tasks
             "
 
