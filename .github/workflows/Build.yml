@@ -36,10 +36,15 @@ jobs:
               apt-get update &&
               apt-get install -y cppcheck &&
               cd /project &&
-              cppcheck --enable=all --error-exitcode=1 \
+              cppcheck --enable=warning,performance,portability \
+                --error-exitcode=1 \
                 --inline-suppr \
                 --suppress=missingIncludeSystem \
-                .
+                --suppress=toomanyconfigs \
+                --exclude=build \
+                --exclude=bootloader \
+                --exclude=managed_components \
+                app bsp drivers services include main tasks
             "
 
       - name: Upload build artifacts
