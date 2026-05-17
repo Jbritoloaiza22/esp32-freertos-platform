@@ -1,0 +1,25 @@
+name: ESP32 Platform CI
+
+on:
+  push:
+    branches:
+  pull_request:
+    branches:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t esp32-platform ./docker
+
+      - name: Run container
+        run: |
+          docker run --rm esp32-platform bash -c "
+            echo 'Container started successfully'
+          "
