@@ -26,6 +26,27 @@ jobs:
               idf.py build
             "
 
+      - name: Static Analysis (cppcheck)
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/project \
+            -w /project \
+            esp32-platform \
+            bash -c "
+              apt-get update &&
+              apt-get install -y cppcheck &&
+              cd /project &&
+              cppcheck --enable=warning,performance,portability \
+                --error-exitcode=1 \
+                --inline-suppr \
+                --suppress=missingIncludeSystem \
+                --suppress=toomanyconfigs \
+                -i build \
+                -i bootloader \
+                -i managed_components \
+                app bsp drivers services include main tasks
+            "
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
