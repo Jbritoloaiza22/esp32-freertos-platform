@@ -25,3 +25,12 @@ jobs:
             bash -c "
               idf.py build
             "
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: esp32-firmware
+          path: |
+            build/*.bin
+            build/*.elf
+            build/*.map
