@@ -16,8 +16,12 @@ jobs:
         run: |
           docker build -t esp32-platform ./docker
 
-      - name: Run container
+      - name: Build ESP-IDF project
         run: |
-          docker run --rm esp32-platform bash -c "
-            echo 'Container started successfully'
-          "
+          docker run --rm \
+            -v ${{ github.workspace }}:/project \
+            -w /project \
+            esp32-platform \
+            bash -c "
+              idf.py build
+            "
