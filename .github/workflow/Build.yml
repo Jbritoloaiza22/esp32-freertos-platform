@@ -1,6 +1,4 @@
-name: ESP32 Platform CI
-
-name: build
+name: ESP32 Platform CI build
 
 on:
   push:
