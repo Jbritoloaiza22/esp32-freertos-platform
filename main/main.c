@@ -3,6 +3,7 @@
 
 #include "../tasks/heartbeat_task.h"
 
+// cppcheck-suppress unusedFunction
 void app_main(void)
 {
     xTaskCreate(
