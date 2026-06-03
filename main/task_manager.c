@@ -34,7 +34,7 @@
 #include "task_manager.h"
 
 #include "../tasks/heartbeat_task.h"
-#include "../tasks/ui_task.h"
+#include "../tasks/ui/ui_task.h"
 #include "../tasks/sensor_task.h"
 #include "../tasks/connectivity_task.h"
 #include "../tasks/control_task.h"
