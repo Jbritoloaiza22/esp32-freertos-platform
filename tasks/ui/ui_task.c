@@ -38,6 +38,11 @@
 
 #include "lvgl.h"
 
+LV_FONT_DECLARE(lv_font_montserrat_20);
+LV_FONT_DECLARE(lv_font_montserrat_22);
+LV_FONT_DECLARE(lv_font_montserrat_26);
+LV_FONT_DECLARE(lv_font_montserrat_28);
+
 static lv_obj_t *label_voltage;
 static lv_obj_t *label_current;
 static lv_obj_t *label_power;

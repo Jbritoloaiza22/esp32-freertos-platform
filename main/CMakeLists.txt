@@ -14,7 +14,6 @@ idf_component_register(
         "../drivers/led/led.c"
 
         "../tasks/ui/ui_task.c"
-        "../tasks/ui/ui_dashboard.c"
 
     INCLUDE_DIRS
         "."
@@ -26,8 +25,7 @@ idf_component_register(
 
     REQUIRES
         lvgl
-        esp_driver_gpio
-        esp_driver_spi
+        driver
         esp_lcd
         esp_timer
 )
