@@ -5,18 +5,27 @@ idf_component_register(
         "task_manager.c"
 
         "../tasks/heartbeat_task.c"
-        "../tasks/ui_task.c"
         "../tasks/sensor_task.c"
         "../tasks/connectivity_task.c"
         "../tasks/control_task.c"
 
         "../bsp/bsp_board.c"
-
+        "../drivers/display/st7789.c"
         "../drivers/led/led.c"
+
+        "../tasks/ui/ui_task.c"
 
     INCLUDE_DIRS
         "."
         "../tasks"
+        "../tasks/ui"
         "../bsp"
+        "../drivers/display"
         "../drivers/led"
+
+    REQUIRES
+        lvgl
+        driver
+        esp_lcd
+        esp_timer
 )

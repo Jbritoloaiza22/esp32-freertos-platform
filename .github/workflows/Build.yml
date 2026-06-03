@@ -11,6 +11,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
 
       - name: Build Docker image
         run: |
@@ -23,6 +26,9 @@ jobs:
             -w /project \
             esp32-platform \
             bash -c "
+              git config --global --add safe.directory /project && \
+              git config --global --add safe.directory /project/components/lvgl && \
+              git -C /project submodule update --init --recursive && \
               idf.py build
             "
 
